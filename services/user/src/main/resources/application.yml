@@ -1,1 +1,11 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 32742
+    ttl: 5 #minutes
 
+server:
+  servlet:
+    context-path: /user
