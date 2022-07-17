@@ -1,4 +1,4 @@
-package com.jeanboscorwi.microservicesarchitecture.user.configuration;
+package com.jeanboscorwi.microservicesarchitecture.user.configuration.cache;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

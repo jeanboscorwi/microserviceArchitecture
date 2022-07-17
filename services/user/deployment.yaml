@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user-ms
-          image: services/user-0.0.1-snapshot # (normally we fetch from the image repository), here we did "eval $(minikube docker-env)" once to use our loacl
+          image: services/user-0.0.1 # (normally we fetch from the image repository), here we did "eval $(minikube docker-env)" once to use our loacl
           imagePullPolicy: IfNotPresent
           env:
             - name: spring_cloud_config_import-check_enabled
