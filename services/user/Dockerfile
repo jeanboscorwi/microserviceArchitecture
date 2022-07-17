@@ -9,7 +9,7 @@ RUN groupadd -r microservices && useradd -r -g microservices -m -d /app microser
 # Don't run as root, but with application user
 USER microservices
 # Copy the application contents into the container at /app
-COPY --chown=microservices:microservices target/user-*.jar /app/app.jar
+COPY --chown=microservices:microservices target/user-ms-*.jar /app/app.jar
 # Set the working directory to /app
 WORKDIR /app
 # Make port 8080 available to the world outside this container
