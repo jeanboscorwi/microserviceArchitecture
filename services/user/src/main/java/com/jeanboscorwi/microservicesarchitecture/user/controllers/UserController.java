@@ -7,10 +7,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.Slf4j.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -29,7 +31,12 @@ public class UserController {
 
 
     @RequestMapping( path = "/users", method = {RequestMethod.GET})
-    ResponseEntity<List<User>> getUsers() {
+    ResponseEntity<Collection<User>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
+    }
+
+    @RequestMapping( path = "/users/{userId}", method = {RequestMethod.GET})
+    ResponseEntity<User> getUser(@PathVariable long userId) throws Exception{
+        return ResponseEntity.ok(userService.getUser(userId));
     }
 }
