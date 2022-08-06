@@ -1,7 +1,9 @@
 package com.jeanboscorwi.microservicesarchitecture.chat.services;
 
+import com.jeanboscorwi.microservicesarchitecture.chat.clients.NotificationProducer;
 import com.jeanboscorwi.microservicesarchitecture.chat.clients.UserMsClient;
 import com.jeanboscorwi.microservicesarchitecture.chat.models.MessageRequest;
+import com.jeanboscorwi.microservicesarchitecture.chat.models.NotificationRequest;
 import com.jeanboscorwi.microservicesarchitecture.chat.models.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -14,12 +16,18 @@ import org.springframework.stereotype.Service;
 public class ChatService {
 
     private UserMsClient userMsClient;
+    private NotificationProducer notificationProducer;
 
     public void sendMessage(MessageRequest messageRequest) {
 
         User recipient = this.userMsClient.getUser(messageRequest.getRecipientId());
         if(recipient != null){
-            log.info("Message : {} is going to be sent to {}", messageRequest.getMessage(), recipient.getName());
+            NotificationRequest notificationRequest = NotificationRequest.builder()
+                    .deviceId(recipient.getDeviceId())
+                    .payload(String.format("New message to %s", recipient.getName()))
+                    .build();
+
+            notificationProducer.sendMessage(notificationRequest);
         }
     }
 }

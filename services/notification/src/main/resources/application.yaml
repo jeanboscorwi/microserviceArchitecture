@@ -1,15 +1,13 @@
 spring:
   application:
-    name: user-ms
-  cache:
-    type: redis
+    name: notification-ms
   redis:
     host: redis-master.default
     port: 6379
-    cache:
-      ttl: 5 #minutes
-
+    broker:
+      topic: notif-topic
 
 server:
+  port: 8082
   servlet:
     context-path: /${spring.application.name}

@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
-  name: user-ms
+  name: notification-ms
 spec:
   selector:
     matchLabels:
-      app: user-ms
+      app: notification-ms
   replicas: 1 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: user-ms
+        app: notification-ms
     spec:
       containers:
-        - name: user-ms
+        - name: notification-ms
           resources:
             limits:
               memory: 512Mi
             requests:
               memory: 256Mi
-          image: services/user-0.0.1 # (normally we fetch from the image repository), here we did "eval $(minikube docker-env)" once to use our loacl
+          image: services/notification-0.0.1 # (normally we fetch from the image repository), here we did "eval $(minikube docker-env)" once to use our loacl
           imagePullPolicy: IfNotPresent
           env:
             - name: spring_cloud_config_import-check_enabled
               value: "false"
           ports:
-            - containerPort: 8080 # The port that the container is running on in the cluster
+            - containerPort: 8082 # The port that the container is running on in the cluster

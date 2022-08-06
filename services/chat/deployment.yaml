@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-ms
+spec:
+  selector:
+    matchLabels:
+      app: chat-ms
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: chat-ms
+    spec:
+      containers:
+        - name: chat-ms
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
+          image: services/chat-0.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: spring_cloud_config_import-check_enabled
+              value: "false"
+          ports:
+            - containerPort: 8081

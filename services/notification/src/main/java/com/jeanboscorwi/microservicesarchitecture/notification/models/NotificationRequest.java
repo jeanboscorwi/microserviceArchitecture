@@ -1,4 +1,4 @@
-package com.jeanboscorwi.microservicesarchitecture.user.models;
+package com.jeanboscorwi.microservicesarchitecture.notification.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
-    private Long id;
-    private String name;
+public class NotificationRequest implements Serializable {
     private String deviceId;
+    private String payload;
 }

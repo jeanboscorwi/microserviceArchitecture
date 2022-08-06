@@ -15,8 +15,8 @@ import java.util.Map;
 public class UserService {
 
     public static Map< Long, User> USERS_DB = Map.of(
-            1L, User.builder().id(1L).name("jean bosco").build(),
-            2L, User.builder().id(2L).name("Raul Gonzalez").build()
+            1L, User.builder().id(1L).name("jean bosco").deviceId("device1").build(),
+            2L, User.builder().id(2L).name("Raul Gonzalez").deviceId("device2").build()
             );
 
     @Cacheable(value = "user-ms-users", key = "#userId")
