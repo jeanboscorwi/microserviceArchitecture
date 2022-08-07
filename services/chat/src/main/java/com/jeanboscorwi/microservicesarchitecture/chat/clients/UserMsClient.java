@@ -1,28 +1,32 @@
 package com.jeanboscorwi.microservicesarchitecture.chat.clients;
 
 import com.jeanboscorwi.microservicesarchitecture.chat.models.User;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
 
 @Service
 @Slf4j
 public class UserMsClient {
 
-    WebClient webClient;
+    private RestTemplate restTemplate;
+    private String url;
 
-    public UserMsClient(@Value("${user-ms.url:http://localhost:8080/user-ms}") String url){
-        this.webClient = WebClient.create(url);
+    public UserMsClient( @Value("${user-ms.url:http://localhost:8080/user-ms}") String url, RestTemplate restTemplate){
+        this.restTemplate = restTemplate;
+        this.url = url;
     }
 
     public User getUser(Long userId){
-        return webClient.get()
-                .uri("/users/{userId}", userId)
-                .retrieve()
-                .bodyToMono(User.class)
-                .block();
+        return restTemplate.exchange(
+                this.url+"/users/"+userId.toString(),
+                HttpMethod.GET,
+                null,
+                User.class,
+                Collections.emptyMap()).getBody();
     }
 }

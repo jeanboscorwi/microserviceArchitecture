@@ -21,7 +21,7 @@ public class ChatController {
     private ChatService chatService;
 
     @RequestMapping(path = "/message", method = {RequestMethod.POST})
-    ResponseEntity<String> sendMessage(@RequestBody MessageRequest messageRequest) {
+    ResponseEntity<String> sendMessage(@RequestBody MessageRequest messageRequest) throws Exception{
         
         chatService.sendMessage(messageRequest);
 

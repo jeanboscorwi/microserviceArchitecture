@@ -1,7 +1,9 @@
 package com.jeanboscorwi.microservicesarchitecture.notification.configuration.redis.broker;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeanboscorwi.microservicesarchitecture.notification.listeners.NotificationsListener;
 import com.jeanboscorwi.microservicesarchitecture.notification.models.NotificationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -35,13 +37,13 @@ public class RedisConsumerConfig {
     @Bean
     public MessageListenerAdapter listenerAdapter(NotificationsListener consumer) {
         MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(consumer);
-        messageListenerAdapter.setSerializer(new Jackson2JsonRedisSerializer<>(NotificationRequest.class));
+        messageListenerAdapter.setSerializer(new Jackson2JsonRedisSerializer<>(String.class));
         return messageListenerAdapter;
     }
     @Bean
-    RedisTemplate<String, NotificationRequest> redisTemplate(RedisConnectionFactory connectionFactory,
-                                                             Jackson2JsonRedisSerializer<NotificationRequest> serializer) {
-        RedisTemplate<String, NotificationRequest> redisTemplate = new RedisTemplate<>();
+    RedisTemplate<String, String> redisTemplate(RedisConnectionFactory connectionFactory,
+                                                             Jackson2JsonRedisSerializer<String> serializer) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setDefaultSerializer(serializer);
         redisTemplate.afterPropertiesSet();
@@ -49,7 +51,7 @@ public class RedisConsumerConfig {
     }
     
     @Bean
-    public Jackson2JsonRedisSerializer<NotificationRequest> jackson2JsonRedisSerializer() {
-        return new Jackson2JsonRedisSerializer<>(NotificationRequest.class);
+    public Jackson2JsonRedisSerializer<String> jackson2JsonRedisSerializer() {
+        return new Jackson2JsonRedisSerializer<>(String.class);
     }
 }

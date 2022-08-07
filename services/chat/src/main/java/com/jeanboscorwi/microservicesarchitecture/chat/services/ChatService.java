@@ -18,7 +18,7 @@ public class ChatService {
     private UserMsClient userMsClient;
     private NotificationProducer notificationProducer;
 
-    public void sendMessage(MessageRequest messageRequest) {
+    public void sendMessage(MessageRequest messageRequest) throws Exception{
 
         User recipient = this.userMsClient.getUser(messageRequest.getRecipientId());
         if(recipient != null){
